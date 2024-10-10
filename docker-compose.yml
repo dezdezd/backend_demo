@@ -8,15 +8,13 @@ services:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - mynetwork
-
+      - mynetwork  # Указана сеть mynetwork
 volumes:
   pgdata:
-
 networks:
-  mynetwork:
+  mynetwork:  # Определена сеть mynetwork
     driver: bridge
