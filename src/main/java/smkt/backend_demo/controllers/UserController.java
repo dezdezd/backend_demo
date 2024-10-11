@@ -1,9 +1,12 @@
-package smkt.backend_demo;
+package smkt.backend_demo.controllers;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import smkt.backend_demo.repositories.UserRepository;
+import smkt.backend_demo.model.User;
 
 import java.util.List;
 
@@ -14,14 +17,18 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody AppUser appUser) {
+    public ResponseEntity<String> registerUser(@RequestBody User appUser) {
+        appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         userRepository.save(appUser);
         return ResponseEntity.ok("User registered successfully");
     }
 
     @GetMapping("/all")
-    public List<AppUser> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 }
