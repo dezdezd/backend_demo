@@ -23,6 +23,7 @@ public class User {
     private String password;
 
     @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "user_roles", schema = "users", joinColumns = @JoinColumn(name = "user_id"))
     private Set<String> roles = new HashSet<>();
 
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
